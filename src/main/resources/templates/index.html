@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>資産管理アプリ</title>
+</head>
+<body>
+    <h1>資産管理帳</h1>
+
+    <form action="/add" method="post">
+        日付：<input type="date" name="date" required><br>
+        項目：<input type="text" name="category" placeholder="食費など" required><br>
+        金額：<input type="number" name="amount" required> 円<br>
+        <button type="submit">記録する</button>
+    </form>
+
+    <hr>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>日付</th>
+            <th>項目</th>
+            <th>金額</th>
+        </tr>
+        <tr th:each="asset : ${assets}">
+            <td th:text="${asset.id}"></td>
+            <td th:text="${asset.date}"></td>
+            <td th:text="${asset.category}"></td>
+            <td th:text="${asset.amount}"></td>
+        </tr>
+    </table>
+</body>
+</html>
