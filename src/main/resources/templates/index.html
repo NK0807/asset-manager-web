@@ -30,12 +30,19 @@
             <th>日付</th>
             <th>項目</th>
             <th>金額</th>
+			<th>操作</th>
         </tr>
         <tr th:each="asset : ${assets}">
             <td th:text="${asset.id}"></td>
             <td th:text="${asset.date}"></td>
             <td th:text="${asset.category}"></td>
             <td th:text="${asset.amount}"></td>
+			<td>
+				<form action="/delete" method="post">
+					<input type="hidden" name="id" th:value="${asset.id}">
+					<button type="submit">削除</button>
+				</form>
+			</td>
         </tr>
     </table>
 </body>

@@ -22,6 +22,10 @@ public class AssetService {
 		repository.save(asset);
 	}
 
+	public void delete(Integer id) {
+		repository.deleteById(id);
+	}
+	
 	public Integer getTotalAmount() {
 		int sum = 0;
 		List<Asset> assetList = repository.findAll();
