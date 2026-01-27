@@ -9,12 +9,18 @@
 
     <p>合計支出: <span th:text="${total}">0</span> 円</p>
 
-    <form action="/add" method="post">
-        日付：<input type="date" name="date" required><br>
-        項目：<input type="text" name="category" placeholder="食費など" required><br>
-        金額：<input type="number" name="amount" required> 円<br>
-        <button type="submit">記録する</button>
-    </form>
+	<form action="/add" method="post" th:object="${asset}"> <ul th:if="${#fields.hasErrors('*')}">
+			<li th:each="err : ${#fields.errors('*')}" th:text="${err}" style="color: red;"></li>
+		</ul>
+
+		日付：<input type="date" name="date" required><br>
+	        
+		項目：<input type="text" name="category" placeholder="食費など" th:value="*{category}"><br>
+	        
+		金額：<input type="number" name="amount" th:value="*{amount}"> 円<br>
+	        
+		<button type="submit">記録する</button>
+	</form>
 
     <hr>
 
