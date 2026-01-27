@@ -56,4 +56,11 @@ public class AssetController {
 		service.save(asset);
 		return "redirect:/";
 	}
+	
+	// 削除
+	@PostMapping("/delete")
+	public String delete(Integer id) {
+		service.delete(id);
+		return "redirect:/";
+	}
 }
