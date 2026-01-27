@@ -26,6 +26,10 @@ public class AssetService {
 		repository.deleteById(id);
 	}
 	
+	public Asset getAsset(Integer id) {
+		return repository.findById(id).orElse(null);
+	}
+	
 	public Integer getTotalAmount() {
 		int sum = 0;
 		List<Asset> assetList = repository.findAll();
