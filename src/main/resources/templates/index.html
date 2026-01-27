@@ -38,7 +38,9 @@
             <td th:text="${asset.category}"></td>
             <td th:text="${asset.amount}"></td>
 			<td>
-				<form action="/delete" method="post">
+				<a th:href="@{/edit/{id}(id=${asset.id})}">編集</a>
+				
+				<form action="/delete" method="post" style="display:inline;">
 					<input type="hidden" name="id" th:value="${asset.id}">
 					<button type="submit">削除</button>
 				</form>

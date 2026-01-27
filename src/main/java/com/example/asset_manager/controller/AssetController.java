@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.asset_manager.entity.Asset;
@@ -61,6 +62,27 @@ public class AssetController {
 	@PostMapping("/delete")
 	public String delete(Integer id) {
 		service.delete(id);
+		return "redirect:/";
+	}
+	
+	// 編集
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable Integer id, Model model) {
+		Asset asset = service.getAsset(id);
+		model.addAttribute("asset", asset);
+		return "edit";
+	}
+	
+	// データ更新
+	@PostMapping("/update")
+	public String update(@Validated Asset asset, BindingResult result, Model model) {
+		// エラーがあったら編集画面に戻る
+		if(result.hasErrors()) {
+			return "edit";
+		}
+		
+		// エラーがなければ保存
+		service.save(asset);
 		return "redirect:/";
 	}
 }
