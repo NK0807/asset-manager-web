@@ -1,40 +1,47 @@
 # Asset Manager Web (資産管理アプリ Webバージョン)
 
-Spring Bootを使用して作成した、シンプルな家計簿・資産管理アプリケーションです。
-日々の支出を記録し、データベースに保存すると同時に、全支出の合計金額を自動計算して表示します。
+Spring Bootを使用して作成した、実務を意識した家計簿・資産管理アプリケーションです。
+日々の支出の記録・編集・削除（CRUD）を完備し、入力値の検証（バリデーション）によってデータの整合性を保つ設計となっています。
 
-※本アプリケーションは、Javaの基礎学習およびSpring Bootの実践的な理解を目的に作成しました。
+※本アプリケーションは、JavaおよびSpring Bootを用いたWebアプリケーション開発の実践的なスキル習得を目的に作成しました。
 
 ## 機能一覧 (Features)
 
-* **支出の記録**: 日付、項目、金額を入力してデータベースに保存します。
-* **一覧表示**: 過去の支出履歴を表形式で確認できます。
-* **合計計算**: Serviceクラス内のロジックにより、登録された全データの合計支出をリアルタイムで算出し、トップページに表示します。
+* **支出の記録 (Create)**: 日付、項目、金額を入力してデータベースに保存します。
+* **一覧表示 (Read)**: 過去の支出履歴を表形式で確認できます。
+* **詳細編集 (Update)**: 登録済みのデータを呼び出し、内容を修正して上書き保存できます。
+* **削除機能 (Delete)**: 不要になったデータをID指定で安全に削除できます。
+* **入力チェック (Validation)**: 必須入力や金額の範囲（マイナス不可）などを厳格にチェックし、不正なデータの登録を防ぎます。
+* **合計計算**: Serviceクラス内のロジックにより、全支出の合計金額をリアルタイムで算出し、トップページに表示します。
 
 ## 学んだこと (Learning Outcomes)
 
-このプロジェクトでは、単なるCRUD（登録・表示）だけでなく、**「データを加工・計算するロジック」**の実装に重点を置きました。
+このプロジェクトでは、単なる機能実装だけでなく、「堅牢な業務アプリケーション」を作るための設計と実装に重点を置きました。
 
-### 1. ビジネスロジックの実装 (Service)
-* Repositoryからデータを取得して終わりではなく、Serviceクラス内で `for` 文を用いた計算処理 (`getTotalAmount`) を実装しました。
-* Controller、Service、Repositoryの役割分担を意識し、「計算はService」「表示はController」と責務を分離しました。
+### 1. CRUDの完全実装
+* Webアプリの基本である **Create（登録）、Read（表示）、Update（更新）、Delete（削除）** の4機能を独力で実装しました。
+* 特に「更新（Update）」においては、`@PathVariable` を用いたIDの受け渡しや、hiddenフィールドを使ったデータの引き継ぎなど、Web特有のデータの流れを理解しました。
 
-### 2. Javaの型システムの理解
-* **プリミティブ型 (`int`)** と **ラッパークラス (`Integer`)** の違いを学び、適切に使い分けました。
-    * データベースとやり取りするEntityでは `null` を許容する `Integer` を使用。
-    * 計算ロジック内では計算の確実性を担保するため `int` を使用。
+### 2. バリデーション（入力チェック）の実装
+* データの整合性を保つため、`Spring Validation` を導入しました。
+    * `@NotNull`, `@Size`, `@Min` などのアノテーションを活用し、Entityレベルでルールを定義。
+    * Controllerで `BindingResult` を用いてエラーを検知し、ユーザーに適切なエラーメッセージを画面表示する仕組みを構築しました。
 
-### 3. クラウド開発環境でのトラブルシューティング
-* GitHub Codespacesでの開発時、リダイレクト処理においてポート番号が不正に付与される問題に直面しました。
-* フレームワークの挙動を調査し、`application.properties` に `server.forward-headers-strategy=framework` を設定することで解決しました。
+### 3. ビジネスロジックと責務の分離
+* Controllerにすべてを書くのではなく、計算処理やDB操作の呼び出しはServiceクラスに集約させました。
+* 「画面制御はController」「ロジックはService」「データ操作はRepository」というMVCアーキテクチャの基本を徹底しました。
 
-### 4. 日付データの扱い
-* `java.time.LocalDate` クラスを使用し、HTMLの `<input type="date">` とJavaオブジェクト間のデータバインディングを実装しました。
+### 4. Javaの型システムの適切な使い分け
+* データベースとやり取りするEntityでは `null` を許容する `Integer` を使用し、計算ロジック内では確実性を担保するため `int` を使用するなど、目的意識を持って型を選定しました。
+
+### 5. クラウド開発環境でのトラブルシューティング
+* GitHub Codespacesでの開発時、リダイレクト処理においてポート番号が不正に付与される問題に直面しましたが、フレームワークの設定（`server.forward-headers-strategy`）を見直すことで自己解決しました。
 
 ## 使用技術 (Tech Stack)
 
 * Java 21
 * Spring Boot 3.4.1
+* Spring Boot Validation (入力チェック)
 * Thymeleaf
 * Spring Data JPA
 * H2 Database
@@ -57,8 +64,10 @@ Spring Bootを使用して作成した、シンプルな家計簿・資産管理
 ## ディレクトリ構成
 
 * src/main/java/com/example/asset_manager
-    * controller (画面遷移の制御)
-    * service (合計金額の計算ロジック)
-    * repository (DB操作)
-    * entity (データ構造)
-* src/main/resources/templates (HTML)
+    * controller (画面遷移・入力チェックの制御)
+    * service (CRUD操作の呼び出し・計算ロジック)
+    * repository (DB操作インターフェース)
+    * entity (データ構造・バリデーション定義)
+* src/main/resources/templates (HTML/Thymeleaf)
+    * index.html (一覧・登録画面)
+    * edit.html (編集画面)
