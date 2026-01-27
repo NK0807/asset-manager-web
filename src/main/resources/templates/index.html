@@ -7,6 +7,8 @@
 <body>
     <h1>資産管理帳</h1>
 
+    <p>合計支出: <span th:text="${total}">0</span> 円</p>
+
     <form action="/add" method="post">
         日付：<input type="date" name="date" required><br>
         項目：<input type="text" name="category" placeholder="食費など" required><br>

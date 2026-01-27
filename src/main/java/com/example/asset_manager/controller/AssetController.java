@@ -22,8 +22,12 @@ public class AssetController {
 	public String index(Model model) {
 		List<Asset> assetList = service.findAll();
 		
+		// 合計金額を計算
+		Integer total = service.getTotalAmount();
+
 		// 画面に渡す
 		model.addAttribute("assets", assetList);
+		model.addAttribute("total", total);
 		return "index";
 	}
 	

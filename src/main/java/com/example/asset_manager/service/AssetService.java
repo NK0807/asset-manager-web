@@ -21,4 +21,14 @@ public class AssetService {
 	public void save(Asset asset) {
 		repository.save(asset);
 	}
+
+	public Integer getTotalAmount() {
+		int sum = 0;
+		List<Asset> assetList = repository.findAll();
+		for(Asset a : assetList) {
+			sum += a.getAmount();
+		}
+
+		return sum;
+	}
 }
