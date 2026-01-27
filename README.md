@@ -43,7 +43,7 @@ Spring Bootを使用して作成した、シンプルな家計簿・資産管理
 ## 起動方法 (How to Run)
 
 1. リポジトリをクローンします。
-    git clone https://github.com/あなたのユーザー名/asset-manager.git
+    git clone https://github.com/NK0807/asset-manager.git
 
 2. ディレクトリに移動します。
     cd asset-manager
