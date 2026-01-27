@@ -1,4 +1,4 @@
-# Asset Manager (資産管理アプリ)
+# Asset Manager Web (資産管理アプリ Webバージョン)
 
 Spring Bootを使用して作成した、シンプルな家計簿・資産管理アプリケーションです。
 日々の支出を記録し、データベースに保存すると同時に、全支出の合計金額を自動計算して表示します。
@@ -43,7 +43,7 @@ Spring Bootを使用して作成した、シンプルな家計簿・資産管理
 ## 起動方法 (How to Run)
 
 1. リポジトリをクローンします。
-    git clone https://github.com/NK0807/asset-manager.git
+    git clone https://github.com/NK0807/asset-manager-web.git
 
 2. ディレクトリに移動します。
     cd asset-manager
