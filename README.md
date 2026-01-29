@@ -40,7 +40,7 @@ Spring Bootを使用して作成した、実務を意識した家計簿・資産
 ## 使用技術 (Tech Stack)
 
 * Java 21
-* Spring Boot 3.4.1
+* Spring Boot 4.0.2
 * Spring Boot Validation (入力チェック)
 * Thymeleaf
 * Spring Data JPA
